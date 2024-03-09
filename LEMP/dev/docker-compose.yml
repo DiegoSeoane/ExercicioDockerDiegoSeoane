@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./app:/app
+      - ./nginx/certificados:/certificados
+      - ./nginx/diegodawp2324.gleeze.com.conf.template:/etc/nginx/templates/diegodawp2324.gleeze.com.conf.template
+  php:
+    build: php
+    volumes:
+      - ./app:/app
+      - ./php/www.conf:/etc/php/8.2/fpm/pool.d/www.conf
+  basededatos:
+    image: mysql:8.3
+    env_file:
+      - .env_bd
+    volumes:
+       - ./bd/backup.sql:/docker-entrypoint-initdb.d/backup.sh
+       - datos:/var/lib/mysql
+       - ./bd:/bd
+volumes:
+   datos:
