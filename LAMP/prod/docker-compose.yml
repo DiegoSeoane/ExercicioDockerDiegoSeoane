@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  web:
+    build: apache
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./app:/app
+      - ./apache/certificados:/certificados
+      - ./apache/diegodawp2324.gleeze.com.conf:/etc/apache2/sites-enabled/diegodawp2324.gleeze.com.conf
+volumes:
+   datos:

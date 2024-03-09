@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  web:
+    build: apache
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./app:/app
+      - ./apache/certificados:/certificados
+      - ./apache/diegodawp2324.gleeze.com.conf:/etc/apache2/sites-enabled/diegodawp2324.gleeze.com.conf
+  basededatos:
+    image: mysql:8.3
+    env_file:
+      - .env_bd
+    volumes:
+       - ./bd/backup.sql:/docker-entrypoint-initdb.d/backup.sh
+       - datos:/var/lib/mysql
+       - ./bd:/bd
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8080:80
+volumes:
+   datos:
